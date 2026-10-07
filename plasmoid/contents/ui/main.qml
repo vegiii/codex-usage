@@ -163,7 +163,7 @@ PlasmoidItem {
                     checkable: true
                     checked: Plasmoid.configuration.pinned
                     onToggled: Plasmoid.configuration.pinned = checked
-                    text: i18n("Keep popup open")
+                    text: i18n("Keep Open")
                     display: PlasmaComponents.AbstractButton.IconOnly
                     PlasmaComponents.ToolTip.text: text
                     PlasmaComponents.ToolTip.visible: hovered
