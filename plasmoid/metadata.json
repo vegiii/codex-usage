@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Id": "local.codex.usage",
+        "Name": "Codex Usage",
+        "Description": "Codex 5-hour and weekly quota remaining",
+        "Icon": "office-chart-bar",
+        "Version": "1.1.1",
+        "Category": "System Information",
+        "Authors": [{ "Name": "Vegard" }]
+    },
+    "KPackageStructure": "Plasma/Applet",
+    "X-Plasma-API-Minimum-Version": "6.0"
+}
