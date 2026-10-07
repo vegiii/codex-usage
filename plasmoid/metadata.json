@@ -2,7 +2,7 @@
     "KPlugin": {
         "Id": "local.codex.usage",
         "Name": "Codex Usage",
-        "Description": "Codex 5-hour and weekly quota remaining",
+        "Description": "Codex 5-hour and weekly quota left",
         "Icon": "office-chart-bar",
         "Version": "1.1.1",
         "Category": "System Information",

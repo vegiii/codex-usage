@@ -28,7 +28,7 @@ PlasmoidItem {
     function quotaText(key, label) {
         var quota = usage ? usage[key] : null;
         return label + ": " + (quota && typeof quota.remaining === "number"
-            ? Math.round(quota.remaining) + "% remaining" : i18n("Unavailable"));
+            ? Math.round(quota.remaining) + "% left" : i18n("Unavailable"));
     }
 
     hideOnWindowDeactivate: !Plasmoid.configuration.pinned
@@ -185,7 +185,7 @@ PlasmoidItem {
                         }
                         PlasmaComponents.Label {
                             color: root.percentageColor(available ? quota.remaining : null, Kirigami.Theme.textColor)
-                            text: (available ? Math.round(quota.remaining) + "% remaining" : (root.fetching && !root.usage ? "Loading…" : "Unavailable"))
+                            text: (available ? Math.round(quota.remaining) + "% left" : (root.fetching && !root.usage ? "Loading…" : "Unavailable"))
                                 + (root.refreshError && root.usage ? " · stale" : "")
                         }
                     }
