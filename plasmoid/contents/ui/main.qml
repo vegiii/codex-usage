@@ -69,7 +69,7 @@ PlasmoidItem {
     }
 
     Timer {
-        interval: 60000
+        interval: 30000
         running: true
         repeat: true
         onTriggered: root.refresh()
@@ -90,6 +90,12 @@ PlasmoidItem {
         padding: 0
         focusPolicy: Qt.TabFocus
         onClicked: root.expanded = !root.expanded
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.MiddleButton
+            onClicked: root.refresh()
+        }
 
         // Show a border for keyboard navigation only, without a hover outline.
         background: Rectangle {
@@ -117,8 +123,10 @@ PlasmoidItem {
     fullRepresentation: Item {
         Layout.minimumWidth: 300
         Layout.preferredWidth: 300
-        Layout.minimumHeight: content.implicitHeight + 16
-        Layout.preferredHeight: Math.max(160, Layout.minimumHeight)
+        Layout.maximumWidth: 300
+        Layout.minimumHeight: Math.max(160, content.implicitHeight + 16)
+        Layout.preferredHeight: Layout.minimumHeight
+        Layout.maximumHeight: Layout.minimumHeight
 
         ColumnLayout {
             id: content
