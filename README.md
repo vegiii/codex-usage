@@ -2,6 +2,10 @@
 
 Compact KDE Plasma 6 widget showing Codex 5-hour and weekly quota remaining. Refreshes every 60 seconds, or every 20 seconds when the 5-hour quota has 30% or less remaining.
 
+Pin the popup to keep it open when switching applications; closing the popup clears the pin. Hover over either reset label to see its exact local reset date and time in 24-hour format. Settings control the panel text size.
+
+Middle-click the panel widget to refresh immediately. A spinner appears over the panel percentage during a middle-click refresh; automatic updates do not show it.
+
 ## Requirements
 
 - KDE Plasma 6 with `plasma5support` and `kpackagetool6`.
@@ -22,10 +26,6 @@ kpackagetool6 --type Plasma/Applet --install plasmoid
 ```
 
 Open **Add Widgets** and add **Codex Usage**.
-
-Pin the popup to keep it open when switching applications; closing the popup clears the pin. Hover over either reset label to see its exact local reset date and time in 24-hour format. Settings control the panel text size.
-
-Middle-click the panel widget to refresh immediately. A spinner appears over the panel percentage during a middle-click refresh; automatic updates do not show it.
 
 ## Update
 
