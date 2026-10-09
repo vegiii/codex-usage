@@ -11,6 +11,7 @@ PlasmoidItem {
     property var usage: null
     property string refreshError: ""
     property bool fetching: false
+    property bool manualRefresh: false
     property double now: Date.now()
     property double lastUpdated: 0
     readonly property var panelRemaining: usage && usage.fiveHour ? usage.fiveHour.remaining : null
@@ -36,9 +37,10 @@ PlasmoidItem {
     toolTipSubText: quotaText("fiveHour", "5-hour") + "\n" + quotaText("weekly", "Weekly")
         + (refreshError ? "\n" + refreshError : "")
 
-    function refresh() {
+    function refresh(manual) {
         if (fetching)
             return;
+        manualRefresh = manual === true;
         fetching = true;
         source.connectSource('"$HOME/.local/bin/codex-usage"');
     }
@@ -69,7 +71,7 @@ PlasmoidItem {
     }
 
     Timer {
-        interval: 60000
+        interval: typeof root.panelRemaining === "number" && root.panelRemaining <= 30 ? 20000 : 60000
         running: true
         repeat: true
         onTriggered: root.refresh()
@@ -81,7 +83,11 @@ PlasmoidItem {
         onTriggered: root.now = Date.now()
     }
     Component.onCompleted: refresh()
-    onExpandedChanged: now = Date.now()
+    onExpandedChanged: {
+        now = Date.now();
+        if (!expanded)
+            Plasmoid.configuration.pinned = false;
+    }
     compactRepresentation: PlasmaComponents.ToolButton {
         id: panelButton
         text: "Codex Usage"
@@ -111,14 +117,26 @@ PlasmoidItem {
                 fontSizeMode: Text.Fit
                 minimumPixelSize: 8
             }
+            PlasmaComponents.BusyIndicator {
+                anchors.fill: parent
+                visible: root.fetching && root.manualRefresh
+                running: visible
+            }
+        }
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.MiddleButton
+            onClicked: root.refresh(true)
         }
     }
 
     fullRepresentation: Item {
         Layout.minimumWidth: 300
         Layout.preferredWidth: 300
-        Layout.minimumHeight: content.implicitHeight + 16
-        Layout.preferredHeight: Math.max(160, Layout.minimumHeight)
+        Layout.maximumWidth: 300
+        Layout.minimumHeight: Math.max(160, content.implicitHeight + 16)
+        Layout.preferredHeight: Layout.minimumHeight
+        Layout.maximumHeight: Layout.minimumHeight
 
         ColumnLayout {
             id: content
@@ -150,8 +168,8 @@ PlasmoidItem {
                     icon.name: "configure"
                     text: i18n("Settings")
                     display: PlasmaComponents.AbstractButton.IconOnly
-                    implicitHeight: 22
-                    implicitWidth: 22
+                    implicitHeight: 28
+                    implicitWidth: 28
                     padding: 3
                     onClicked: Plasmoid.internalAction("configure").trigger()
                     PlasmaComponents.ToolTip.text: root.refreshError || text
@@ -165,6 +183,9 @@ PlasmoidItem {
                     onToggled: Plasmoid.configuration.pinned = checked
                     text: i18n("Keep Open")
                     display: PlasmaComponents.AbstractButton.IconOnly
+                    implicitHeight: 28
+                    implicitWidth: 28
+                    padding: 3
                     PlasmaComponents.ToolTip.text: text
                     PlasmaComponents.ToolTip.visible: hovered
                 }
@@ -200,6 +221,16 @@ PlasmoidItem {
                         text: Usage.resetText(quota ? quota.resetsAt : null, root.now)
                         font: Kirigami.Theme.smallFont
                         opacity: 0.7
+                        PlasmaComponents.ToolTip.text: quota && quota.resetsAt > 0
+                            ? i18n("Resets on %1", Qt.formatDateTime(new Date(quota.resetsAt * 1000), "dddd HH:mm"))
+                            : i18n("Reset time unavailable")
+                        PlasmaComponents.ToolTip.visible: resetHover.containsMouse
+                        MouseArea {
+                            id: resetHover
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            acceptedButtons: Qt.NoButton
+                        }
                     }
                 }
             }
