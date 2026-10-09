@@ -78,7 +78,7 @@ PlasmoidItem {
     }
     Timer {
         interval: 1000
-        running: true
+        running: root.expanded
         repeat: true
         onTriggered: root.now = Date.now()
     }
