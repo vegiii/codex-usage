@@ -1,24 +1,22 @@
 # Codex Usage
 
-Compact KDE Plasma 6 widget showing Codex 5-hour and weekly quota remaining. Refreshes every 60 seconds, or every 20 seconds when the 5-hour quota has 30% or less remaining.
+KDE Plasma 6 widget showing remaining Codex 5-hour and weekly quotas and their reset times.
 
-Pin the popup to keep it open when switching applications; closing the popup clears the pin. Hover over either reset label to see its exact local reset date and time in 24-hour format. Settings control the panel text size.
+Middle-click to refresh or pin the popup to keep it open. Refreshes every minute, or every 20 seconds when the 5-hour quota has 30% or less remaining.
 
-Middle-click the panel widget to refresh immediately. A spinner appears over the panel percentage during a middle-click refresh; automatic updates do not show it.
+I built this for my own use, but you’re welcome to use it and adapt it to your needs.
 
 ## Requirements
 
 - KDE Plasma 6 with `plasma5support` and `kpackagetool6`.
 - Codex CLI on Plasma's `PATH`, signed in using `codex login`.
-- Go 1.22 or newer to build.
+- Go 1.22+ and Git.
 
-## Build and install
-
-Clone the repository into `~/codex-usage`, then build and install. You can choose another location; adjust the paths below accordingly.
+## Install
 
 ```bash
-git clone https://github.com/vegiii/codex-usage.git ~/codex-usage &&
-cd ~/codex-usage &&
+git clone https://github.com/vegiii/codex-usage.git ~/Documents/Git/codex-usage &&
+cd ~/Documents/Git/codex-usage &&
 CGO_ENABLED=0 go build -o bin/codex-usage . &&
 mkdir -p ~/.local/bin &&
 install -m 755 bin/codex-usage ~/.local/bin/codex-usage &&
@@ -29,10 +27,10 @@ Open **Add Widgets** and add **Codex Usage**.
 
 ## Update
 
-Close widget settings, then run:
+Close widget settings first. This restarts Plasma to load the update.
 
 ```bash
-cd ~/codex-usage &&
+cd ~/Documents/Git/codex-usage &&
 git pull --ff-only &&
 CGO_ENABLED=0 go build -o bin/codex-usage . &&
 install -m 755 bin/codex-usage ~/.local/bin/codex-usage &&
@@ -40,13 +38,6 @@ kpackagetool6 --type Plasma/Applet --upgrade plasmoid &&
 systemctl --user restart plasma-plasmashell.service
 ```
 
-The panel and desktop briefly disappear while Plasma reloads.
+## License
 
-## Remove
-
-Remove the widget from your panel or desktop, then run:
-
-```bash
-kpackagetool6 --type Plasma/Applet --remove local.codex.usage &&
-rm ~/.local/bin/codex-usage
-```
+[MIT](LICENSE).

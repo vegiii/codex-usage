@@ -2,11 +2,12 @@
     "KPlugin": {
         "Id": "local.codex.usage",
         "Name": "Codex Usage",
-        "Description": "Codex 5-hour and weekly quota left",
+        "Description": "Widget for tracking Codex usage",
         "Icon": "office-chart-bar",
-        "Version": "1.1.1",
         "Category": "System Information",
-        "Authors": [{ "Name": "Vegard" }]
+        "License": "MIT",
+        "Authors": [{ "Name": "Vegard" }],
+        "Website": "https://github.com/vegiii/codex-usage"
     },
     "KPackageStructure": "Plasma/Applet",
     "X-Plasma-API-Minimum-Version": "6.0"

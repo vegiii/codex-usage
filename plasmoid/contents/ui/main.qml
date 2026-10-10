@@ -71,7 +71,7 @@ PlasmoidItem {
     }
 
     Timer {
-        interval: typeof root.panelRemaining === "number" && root.panelRemaining <= 30 ? 20000 : 60000
+        interval: typeof root.panelRemaining === "number" && root.panelRemaining > 0 && root.panelRemaining <= 30 ? 20000 : 60000
         running: true
         repeat: true
         onTriggered: root.refresh()
