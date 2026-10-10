@@ -2,8 +2,6 @@
 
 KDE Plasma 6 widget showing remaining Codex 5-hour and weekly quotas and their reset times.
 
-Middle-click to refresh or pin the popup to keep it open. Refreshes every minute, or every 20 seconds when the 5-hour quota has 30% or less remaining.
-
 I built this for my own use, but you’re welcome to use it and adapt it to your needs.
 
 ## Requirements
